@@ -1,5 +1,6 @@
 ## ResBuilder
-`ResBuilder` - maven module, which makes life easier in some aspects of development HoloEverywhere.
+`ResBuilder` - maven module, which makes life easier in some aspects of development HoloEverywhere.  
+[![Build Status](https://travis-ci.org/Prototik/ResBuilder.png?branch=master)](https://travis-ci.org/Prototik/ResBuilder)
 
 ### Styles
 First ever task of `ResBuilder` was a styles compiling basic on blocks.  
@@ -45,3 +46,8 @@ Grab strings l10n from android sdk and can complement them.
 
 ### Attrs
 Responsible for the attributes and styleable blocks.
+
+## License
+GPLv3, full text of license see [here][License]
+
+[License]: https://raw.github.com/Prototik/ResBuilder/master/LICENSE

@@ -1,16 +1,72 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<groupId>org.holoeverywhere</groupId>
 	<artifactId>resbuilder</artifactId>
 	<name>HoloEverywhere ResBuilder</name>
 	<version>2.0.0-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<parent>
-		<groupId>org.holoeverywhere</groupId>
-		<artifactId>parent</artifactId>
-		<version>1.5.0</version>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
 	</parent>
+
+	<scm>
+		<url>https://github.com/Prototik/ResBuilder</url>
+		<connection>scm:git:git://github.com/Prototik/ResBuilder.git</connection>
+		<developerConnection>scm:git:git@github.com:Prototik/ResBuilder.git</developerConnection>
+		<tag>resbuilder-stable</tag>
+	</scm>
+
+	<ciManagement>
+		<system>travis</system>
+		<url>http://travis-ci.org/Prototik/ResBuilder</url>
+	</ciManagement>
+
+	<developers>
+		<developer>
+			<name>Sergey Shatunov</name>
+			<id>Prototik</id>
+			<email>prototypegamez@gmail.com</email>
+			<timezone>+8</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/Prototik/ResBuilder/issues</url>
+	</issueManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>holoeverywhere-repo</id>
+			<name>HoloEverywhere Repo</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+			<uniqueVersion>true</uniqueVersion>
+		</repository>
+
+		<snapshotRepository>
+			<id>holoeverywhere-repo-snapshots</id>
+			<name>HoloEverywhere Repo Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<licenses>
+		<license>
+			<name>GPLv3</name>
+			<url>https://raw.github.com/Prototik/ResBuilder/master/LICENSE</url>
+			<distribution>repo</distribution>
+			<comments>Copyright (c) 2012 Sergey Shatunov</comments>
+		</license>
+	</licenses>
 
 	<dependencies>
 		<dependency>
@@ -26,6 +82,13 @@
 		</dependency>
 	</dependencies>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<java.version>1.6</java.version>
+	</properties>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 
@@ -37,10 +100,68 @@
 					<goalPrefix>resbuilder</goalPrefix>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<inherited>true</inherited>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<inherited>true</inherited>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<tagNameFormat>resbuilder-@{project.version}</tagNameFormat>
+					<scmCommentPrefix>Release: </scmCommentPrefix>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
-  <scm>
-    <tag>resbuilder-2.0.0</tag>
-  </scm>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

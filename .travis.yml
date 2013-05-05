@@ -1,0 +1,24 @@
+language: java
+jdk: openjdk7
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    # Your Sonatype login
+    - SONATYPE_USERNAME=prototik
+    # Your Sonatype password, encrypted by 'travis encrypt -r GitHubLogin/Repo SONATYPE_PASSWORD=pass'
+    - secure: "NPaxbBNvvoP+p2FcsnBdfo09lPi8PLdK6NryhIpwnagBXop7sVGLl7Q3bAFm\ncQ5ouxLZiVYv2Mk5iJXytVTGByyDm5QhyPRWJu9Qnt785wmXOxA5tvAkS3Wa\ntRv0rEmngzz4eB8ZTZTNRD+bi1JRjW6W4OmwL1wJU4N5PXn9jcs="
+
+notifications:
+  email:
+    - prototypegamez@gmail.com
+
+before_install:
+  - export NEW_MAVEN_CONFIG=`pwd`/.maven.xml
+  - python2 .travisConfigCreator.py
+
+install: mvn clean install -B -DskipTests=true --settings ${NEW_MAVEN_CONFIG}
+script: if [[ `git log -1 --pretty=%B ${TRAVIS_COMMIT}` == *"[deploy snapshot]"* ]]; then mvn clean deploy -B -DskipTests=true --settings ${NEW_MAVEN_CONFIG} -DrepositoryId=holoeverywhere-repo-snapshots; fi
