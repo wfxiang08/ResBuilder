@@ -8,10 +8,10 @@ import java.util.TreeSet;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.holoeverywhere.resbuilder.BuildMojo;
-import org.holoeverywhere.resbuilder.FileProcesser.FileProcesserException;
-import org.holoeverywhere.resbuilder.FileProcesser.ProcessResult;
-import org.holoeverywhere.resbuilder.TypeProcesser;
-import org.holoeverywhere.resbuilder.TypeProcesser.Type;
+import org.holoeverywhere.resbuilder.type.FileProcesser.FileProcesserException;
+import org.holoeverywhere.resbuilder.type.FileProcesser.ProcessResult;
+import org.holoeverywhere.resbuilder.type.TypeProcesser;
+import org.holoeverywhere.resbuilder.type.TypeProcesser.Type;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,9 +21,9 @@ public class TypeAttrs extends TypeProcesser {
         private static final long serialVersionUID = -3503835014971969667L;
         private final Set<AttrDefine> mDefineNodes = new TreeSet<AttrDefine>(
                 AttrDefine.COMPARATOR);
+        private String mOutput;
         private final Set<StyleableDefine> mStyleableNodes = new TreeSet<StyleableDefine>(
                 StyleableDefine.COMPARATOR);
-        private String mOutput;
 
         @Override
         public void flush(BuildMojo mojo) throws FileProcesserException {

@@ -13,43 +13,27 @@ import org.json.JSONObject;
 
 public class AttrDefine {
 
-    @Override
-    public boolean equals(Object obj) {
-        if (super.equals(obj)) {
-            return true;
-        }
-        if (!(obj instanceof AttrDefine)) {
-            return false;
-        }
-        AttrDefine o = (AttrDefine) obj;
-        if (!mName.equals(o.mName))
-            return false;
-        if (!mType.equals(o.mType))
-            return false;
-        if (!mEnumDefines.equals(o.mEnumDefines))
-            return false;
-        return true;
-    }
-
-    public static final Comparator<AttrDefine> COMPARATOR = new Comparator<AttrDefine>() {
-        @Override
-        public int compare(AttrDefine o1, AttrDefine o2) {
-            return o1 == null || o1.mName == null ? (o2 == null || o2.mName == null ? 0 : -1)
-                    : o1.mName.compareTo(o2.mName);
-        }
-    };
-
-    private static final Comparator<EnumFlagDefine> ENUM_FLAG_COMPARATOR = new Comparator<EnumFlagDefine>() {
-        @Override
-        public int compare(EnumFlagDefine o1, EnumFlagDefine o2) {
-            return o1 == null || o1.mName == null ? (o2 == null || o2.mName == null ? 0 : -1)
-                    : o1.mName.compareTo(o2.mName);
-        }
-    };
-
     private static final class EnumFlagDefine {
         public String mName;
         public String mValue;
+
+        @Override
+        public boolean equals(Object obj) {
+            if (super.equals(obj)) {
+                return true;
+            }
+            if (!(obj instanceof EnumFlagDefine)) {
+                return false;
+            }
+            EnumFlagDefine o = (EnumFlagDefine) obj;
+            if (!mName.equals(o.mName)) {
+                return false;
+            }
+            if (!mValue.equals(o.mValue)) {
+                return false;
+            }
+            return true;
+        }
 
         public EnumFlagDefine parse(Object o) {
             if (o instanceof JSONObject) {
@@ -67,28 +51,50 @@ public class AttrDefine {
             }
             return this;
         }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (super.equals(obj)) {
-                return true;
-            }
-            if (!(obj instanceof EnumFlagDefine)) {
-                return false;
-            }
-            EnumFlagDefine o = (EnumFlagDefine) obj;
-            if (!mName.equals(o.mName))
-                return false;
-            if (!mValue.equals(o.mValue))
-                return false;
-            return true;
-        }
     }
+
+    public static final Comparator<AttrDefine> COMPARATOR = new Comparator<AttrDefine>() {
+        @Override
+        public int compare(AttrDefine o1, AttrDefine o2) {
+            return o1 == null || o1.mName == null ? o2 == null || o2.mName == null ? 0 : -1
+                    : o1.mName.compareTo(o2.mName);
+        }
+    };
+
+    private static final Comparator<EnumFlagDefine> ENUM_FLAG_COMPARATOR = new Comparator<EnumFlagDefine>() {
+        @Override
+        public int compare(EnumFlagDefine o1, EnumFlagDefine o2) {
+            return o1 == null || o1.mName == null ? o2 == null || o2.mName == null ? 0 : -1
+                    : o1.mName.compareTo(o2.mName);
+        }
+    };
+
+    public final Set<EnumFlagDefine> mEnumDefines = new TreeSet<EnumFlagDefine>(
+            ENUM_FLAG_COMPARATOR);
 
     public String mName;
     public String mType;
-    public final Set<EnumFlagDefine> mEnumDefines = new TreeSet<EnumFlagDefine>(
-            ENUM_FLAG_COMPARATOR);
+
+    @Override
+    public boolean equals(Object obj) {
+        if (super.equals(obj)) {
+            return true;
+        }
+        if (!(obj instanceof AttrDefine)) {
+            return false;
+        }
+        AttrDefine o = (AttrDefine) obj;
+        if (!mName.equals(o.mName)) {
+            return false;
+        }
+        if (!mType.equals(o.mType)) {
+            return false;
+        }
+        if (!mEnumDefines.equals(o.mEnumDefines)) {
+            return false;
+        }
+        return true;
+    }
 
     public AttrDefine parse(Object o) {
         mName = null;
@@ -123,7 +129,7 @@ public class AttrDefine {
                 mName = mName.substring(0, c).trim();
             }
         }
-        if(mType == null && mEnumDefines.size() > 0) {
+        if (mType == null && mEnumDefines.size() > 0) {
             mType = "enum";
         }
         return this;

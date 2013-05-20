@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.resbuilder;
+package org.holoeverywhere.resbuilder.type;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

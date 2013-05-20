@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.resbuilder;
+package org.holoeverywhere.resbuilder.type;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,6 +25,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.holoeverywhere.resbuilder.BuildMojo;
 import org.holoeverywhere.resbuilder.type.attrs.TypeAttrs;
 import org.holoeverywhere.resbuilder.type.strings.TypeStrings;
 import org.holoeverywhere.resbuilder.type.styles.TypeStyles;
@@ -173,10 +174,17 @@ public class FileProcesser {
         }
     }
 
+    private final Map<File, ProcessResult> mCache = new HashMap<File, FileProcesser.ProcessResult>();
+
     private BuildMojo mojo;
 
     public FileProcesser(BuildMojo mojo) {
         setMojo(mojo);
+    }
+
+    private ProcessResult cache(File file, ProcessResult result) {
+        mCache.put(file, result);
+        return result;
     }
 
     public BuildMojo getMojo() {
@@ -194,8 +202,6 @@ public class FileProcesser {
     public ProcessResult process(File file) throws FileProcesserException {
         return process(file, null);
     }
-
-    private final Map<File, ProcessResult> mCache = new HashMap<File, FileProcesser.ProcessResult>();
 
     @SuppressWarnings("unchecked")
     public ProcessResult process(File file, String forceType) throws FileProcesserException {
@@ -231,11 +237,6 @@ public class FileProcesser {
         } catch (Exception e) {
             throw new FileProcesserException(e);
         }
-    }
-
-    private ProcessResult cache(File file, ProcessResult result) {
-        mCache.put(file, result);
-        return result;
     }
 
     public ProcessResult process(String filename) throws FileProcesserException {

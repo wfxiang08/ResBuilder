@@ -19,8 +19,12 @@ import org.json.JSONObject;
 public class Block {
     public Map<String, String> mData = new TreeMap<String, String>(TypeStrings.COMPARATOR);
     public List<String> mInclude = new ArrayList<String>();
-    public String mParent;
     private String mName;
+    public String mParent;
+
+    public String getName() {
+        return mName;
+    }
 
     @SuppressWarnings("unchecked")
     public Block parse(JSONObject data, String name) {
@@ -63,7 +67,7 @@ public class Block {
             }
             String value = String.valueOf(data.opt(key));
             if (value != null) {
-                this.mData.put(key, value);
+                mData.put(key, value);
             }
         }
         return this;
@@ -84,7 +88,7 @@ public class Block {
             }
         }
         SortedMap<String, String> data = new TreeMap<String, String>(TypeStrings.COMPARATOR);
-        data.putAll(this.mData);
+        data.putAll(mData);
         for (Entry<String, String> entry : data.entrySet()) {
             String key = entry.getKey(), value = entry.getValue();
             writer.writeStartElement("item");
@@ -96,9 +100,5 @@ public class Block {
             writer.writeCharacters(value);
             writer.writeEndElement();
         }
-    }
-
-    public String getName() {
-        return mName;
     }
 }

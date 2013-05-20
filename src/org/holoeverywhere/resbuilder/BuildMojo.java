@@ -7,16 +7,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.holoeverywhere.resbuilder.FileProcesser.FileProcesserException;
+import org.holoeverywhere.resbuilder.type.FileProcesser;
+import org.holoeverywhere.resbuilder.type.FileProcesser.FileProcesserException;
 
 /**
  * @goal build
  * @phase initialize
  */
-public class BuildMojo extends AbstractMojo {
+public class BuildMojo extends ResMojo {
     private static final FileFilter BUILD_ALL_FILTER = new FileFilter() {
         @Override
         public boolean accept(File pathname) {
@@ -24,63 +24,6 @@ public class BuildMojo extends AbstractMojo {
                     && pathname.getName().endsWith(".json");
         }
     };
-
-    /**
-     * Path to android sdk
-     * 
-     * @parameter property="android.sdk.path"
-     */
-    public File androidSdkPath;
-
-    /**
-     * @parameter property="android.sdk.platform" default-value="16"
-     * @required
-     */
-    public int androidSdkVersion;
-
-    /**
-     * Build all files from all include dirs
-     * 
-     * @parameter property="holo.resbuilder.buildAll" default-value="false"
-     */
-    public boolean buildAll;
-
-    /**
-     * Dirs for search of input files
-     * 
-     * @parameter property="holo.resbuilder.includeDirs"
-     */
-    public File[] includeDirs;
-
-    /**
-     * Files for processing
-     * 
-     * @parameter property="holo.resbuilder.input" alias="input"
-     */
-    public String[] inputFiles;
-
-    /**
-     * Default output dir, if input file don't specify it
-     * 
-     * @parameter property="holo.resbuilder.outputDir"
-     *            default-value="${basedir}/res"
-     */
-    public File outputDir;
-    public FileProcesser processer;
-
-    /**
-     * If true - skip resource build
-     * 
-     * @parameter property="holo.resbuilder.skip" default-value="false"
-     */
-    public boolean skip;
-
-    /**
-     * Be verbose
-     * 
-     * @parameter property="holo.resbuilder.verbose" default-value="true"
-     */
-    public boolean verbose;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {

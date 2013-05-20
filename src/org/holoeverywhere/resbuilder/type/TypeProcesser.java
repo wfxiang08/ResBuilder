@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.resbuilder;
+package org.holoeverywhere.resbuilder.type;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -7,7 +7,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.holoeverywhere.resbuilder.FileProcesser.ProcessResult;
+import org.holoeverywhere.resbuilder.BuildMojo;
+import org.holoeverywhere.resbuilder.type.FileProcesser.ProcessResult;
 import org.json.JSONObject;
 
 public abstract class TypeProcesser {

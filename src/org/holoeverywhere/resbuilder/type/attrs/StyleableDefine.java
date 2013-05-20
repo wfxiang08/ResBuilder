@@ -14,13 +14,13 @@ public class StyleableDefine {
     public static final Comparator<StyleableDefine> COMPARATOR = new Comparator<StyleableDefine>() {
         @Override
         public int compare(StyleableDefine o1, StyleableDefine o2) {
-            return o1 == null || o1.mName == null ? (o2 == null || o2.mName == null ? 0 : -1)
+            return o1 == null || o1.mName == null ? o2 == null || o2.mName == null ? 0 : -1
                     : o1.mName.compareTo(o2.mName);
         }
     };
 
-    public String mName;
     public final Set<AttrDefine> mAttrDefines = new TreeSet<AttrDefine>(AttrDefine.COMPARATOR);
+    public String mName;
 
     @Override
     public boolean equals(Object obj) {
@@ -31,10 +31,12 @@ public class StyleableDefine {
             return false;
         }
         StyleableDefine o = (StyleableDefine) obj;
-        if (!mName.equals(o.mName))
+        if (!mName.equals(o.mName)) {
             return false;
-        if (!mAttrDefines.equals(o.mAttrDefines))
+        }
+        if (!mAttrDefines.equals(o.mAttrDefines)) {
             return false;
+        }
         return true;
     }
 

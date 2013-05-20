@@ -4,7 +4,7 @@ package org.holoeverywhere.resbuilder.type.styles;
 import java.util.Map;
 
 import org.holoeverywhere.resbuilder.BuildMojo;
-import org.holoeverywhere.resbuilder.FileProcesser.FileProcesserException;
+import org.holoeverywhere.resbuilder.type.FileProcesser.FileProcesserException;
 import org.holoeverywhere.resbuilder.type.styles.TypeStyles.StylesProcessResult;
 import org.json.JSONObject;
 
@@ -45,6 +45,15 @@ public class IncludeRow {
         return this;
     }
 
+    public IncludeRow parseRaw(Object o) {
+        if (o instanceof JSONObject) {
+            return parse((JSONObject) o);
+        } else {
+            name = o.toString();
+        }
+        return this;
+    }
+
     public void process(TypeStyles processer, BuildMojo mojo, Map<String, Block> blocks,
             Map<String, Block> data) throws FileProcesserException {
         process(processer, mojo, blocks, data, null);
@@ -72,14 +81,5 @@ public class IncludeRow {
         for (IncludeRow i : result.include) {
             i.process(processer, mojo, blocks, data, type);
         }
-    }
-
-    public IncludeRow parseRaw(Object o) {
-        if (o instanceof JSONObject) {
-            return parse((JSONObject) o);
-        } else {
-            name = o.toString();
-        }
-        return this;
     }
 }

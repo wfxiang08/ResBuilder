@@ -14,10 +14,10 @@ import java.util.TreeMap;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.holoeverywhere.resbuilder.BuildMojo;
-import org.holoeverywhere.resbuilder.FileProcesser.FileProcesserException;
-import org.holoeverywhere.resbuilder.FileProcesser.ProcessResult;
-import org.holoeverywhere.resbuilder.TypeProcesser;
-import org.holoeverywhere.resbuilder.TypeProcesser.Type;
+import org.holoeverywhere.resbuilder.type.FileProcesser.FileProcesserException;
+import org.holoeverywhere.resbuilder.type.FileProcesser.ProcessResult;
+import org.holoeverywhere.resbuilder.type.TypeProcesser;
+import org.holoeverywhere.resbuilder.type.TypeProcesser.Type;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
